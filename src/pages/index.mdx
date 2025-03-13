@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/Layout.astro
-title: Research Project Page Template
-description: Simple project page template for your research paper, built with Astro and Tailwind CSS
+title: "LiveOCRBench: Tracking Vision-Language Models' Persistent Struggles with Text Recognition"
+description: "LiveOCRBench is a benchmark for evaluating the OCR abilities of vision-language models on different fonts, designs, and languages."
 favicon: favicon.svg
 thumbnail: screenshot-light.png
 ---
@@ -23,7 +23,8 @@ import transformer from "../assets/transformer.webp";
 import Splat from "../components/Splat.tsx"
 import dogsDiffc from "../assets/dogs-diffc.png"
 import dogsTrue from "../assets/dogs-true.png"
-
+import benchmark from "../assets/benchmark.png"
+import bias from "../assets/bias.png"
 
 import CodeBlock from "../components/CodeBlock.astro";
 import Table from "../components/Table.astro";
@@ -33,35 +34,43 @@ export const components = {pre: CodeBlock, table: Table}
   title={frontmatter.title}
   authors={[
     {
-      name: "Roman Hauksson",
-      url: "https://roman.technology",
-      institution: "Independent",
-      notes: ["*", "†"],
+      name: "Yesheng Liu",
+      notes: ["*", "†", "††"],
     },
     {
-      name: "Author Two",
-      institution: "Institution Two",
-      notes: ["*", "†"],
+      name: "Zheqi He",
+      institution: "",
+      notes: ["*"],
     },
     {
-      name: "Author Three",
-      institution: "Institution Three",
-      notes: ["†"],
+      name: "Jingshu Zheng",
+      notes: ["*"],
     },
     {
-      name: "Author Four",
-      institution: "Institution Four",
+      name: "Jinge Yao",
+      notes: ["*"],
+    },
+    {
+      name: "Xi Yang",
+      notes: ["*"],
+    },
+    {
+      name: "Jiajun Zhang",
+      notes: ["†", "††"],
     },
   ]}
-  conference="Conference Name"
   notes={[
     {
       symbol: "*",
-      text: "author note one",
+      text: "BAAI",
     },
     {
       symbol: "†",
-      text: "author note two",
+      text: "Institute of Automation, Chinese Academy of Sciences",
+    },
+    {
+      symbol: "††",
+      text: "School of Artificial Intelligence, University of Chinese Academy of Sciences ",
     },
   ]}
   links={[
@@ -81,21 +90,22 @@ export const components = {pre: CodeBlock, table: Table}
       icon: "academicons:arxiv",
     },
     {
-      name: "Bluesky",
-      url: "",
-      icon: "ri:bluesky-line"
+      name: "Dataset",
+      url: "xx",
+      icon: "simple-icons:huggingface",
+      iconColor: "#FFD21E",
     }
   ]}
   />
 
-<Video source={outside} />
 
 <HighlightedSection>
 
 ## Abstract
 
-This is a live demo for a template you can use to create a simple project page for your research paper. See the code for the template and instructions on how to use it yourself [here](https://github.com/RomanHauksson/academic-project-astro-template). It's made with the [Astro web framework](https://astro.build/) and styled with [Tailwind CSS](https://tailwindcss.com/). You write the content in [MDX](https://mdxjs.com/), which enables markdown formatting like **bold**, _italics_, and ~strikethrough~, as well as custom components like <SmallCaps>small caps.</SmallCaps>
+In recent years, Large Multimodal Models (LMMs) have been widely used across a variety of tasks. In particular, their capabilities in recognizing textual content have been strong, judging from high metrics of text-centric benchmarks. However, there are relatively fewer attempts to specifically benchmark text recognition over various types of fonts or design. Moreover, as LMMs typically incorporate extensive web data in training, the high scores observed in existing benchmarks may heavily stem from data contamination. To effectively mitigate such contamination and to accurately evaluate the true OCR capabilities of LMMs, we present LiveOCRBench, a dynamic benchmark designed specifically for this purpose. LiveOCRBench leverages continuously updated visual content and the corresponding meta-data across four diverse categories, utilizing a semi-automated pipeline to select images that effectively challenge the OCR capabilities of models, significantly reducing the costs associated with direct manual annotation.
 
+We evaluated 25 state-of-the-art LMMs and found that even more recent, advanced models may struggle with simple title queries. Our analysis reveals that current LMMs heavily rely on recalling textual content from previously seen images rather than accurately recognizing individual characters. We will publicly release both our benchmark data and evaluation suite, and plan for future updates on a quarterly basis, to continuously track the performance of various LMMs.
 </HighlightedSection>
 
 ## Figures
@@ -103,69 +113,54 @@ This is a live demo for a template you can use to create a simple project page f
 Use the figure component to display images, videos, equations, or any other element, with an optional caption.
 
 <Figure>
-  <Image slot="figure" source={transformer} altText="Diagram of the transformer deep learning architecture." />
-  <span slot="caption">Diagram of the transformer deep learning architecture.</span>
+  <Image slot="figure" source={benchmark} altText="LiveOCRBench" />
+  <span slot="caption">Examples from LiveOCRBench, encompassing four distinct categories: Book, Movie, Album, and Game. Each category includes representative visual examples along with their title(author if available)</span>
 </Figure>
 
-## Image comparison slider
-
-An interactive, accessible slider component with keyboard navigation.
+## LMMs struggle with simple title queries
+Examples illustrating the Language Bias of LMMs, where the models produced typos in these specific, human-simple cases
 <Figure>
-  <ImageComparison slot="figure" client:load imageUrlOne={dogsDiffc.src} imageUrlTwo={dogsTrue.src} altTextOne="Photo of two dogs running side-by-side in shallow water, lossily compressed using the DiffC algorithm" altTextTwo="Original photo of two dogs running side-by-side in shallow water" />
-  <span slot="caption">A photo of two dogs running side-by-side in shallow water, lossily compressed using the <a href="https://jeremyiv.github.io/diffc-project-page/">DiffC algorithm</a>.</span>
+  <Image slot="figure" source={bias} altText="Language Bias" />
+  <span slot="caption">Examples illustrating the Language Bias of LMMs, where the models produced typos in these specific, human-simple cases</span>
 </Figure>
 
-## Two columns
+## Leaderboard
 
-Use the two columns component to display two columns of content. In this example, the first column contains a figure with a YouTube video and the second column contains a figure with a custom [React](https://react.dev/) component. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
-
-<TwoColumns>
-  <Figure slot="left">
-    <YouTubeVideo slot="figure" videoId="wjZofJX0v4M" />
-    <span slot="caption">Take a look at this YouTube video.</span>
-  </Figure>
-  <Figure slot="right">
-    <Splat slot="figure" client:idle />
-    <span slot="caption">Now look at this <a href="https://en.wikipedia.org/wiki/Gaussian_splatting">Gaussian splat</a>, rendered with a React component.</span>
-  </Figure>
-</TwoColumns>
-
-## Heading levels
-
-Use headings to divide your content into sections.
-
-### Heading 3
-
-Go down a level to heading 3...
-
-#### Heading 4
-
-...and down again to heading 4.
-
-## LaTeX
-
-You can also add LaTeX formulas, rendered during the build process using [KaTeX](https://katex.org/) so they're quick to load for visitors of your project page. You can write them inline, like this: <LaTeX inline formula="a^2 + b^2 = c^2" />. Or, you can write them as a block:
-
-<LaTeX formula="\int_a^b f(x) dx" />
-
-## Tables
-
-You can add simple tables using [GitHub Flavored Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables):
-
-| Model | Accuracy | F1 score | Training time (hours) |
-| :--- | :---: | :---: | :---: |
-| BERT-base | 0.89 | 0.87 | 4.5 |
-| RoBERTa-large | 0.92 | 0.91 | 7.2 |
-| DistilBERT | 0.86 | 0.84 | 2.1 |
-| XLNet | 0.90 | 0.89 | 6.8 |
+| Model | Overall | Album | Book | Game | Movie |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Gemini-2.0-flash | **76.86\%** | **66.67\%** | 84.71\% | *77.78\%* | 75.76\% |
+| GPT-4o | *76.42\%* | 51.52\% | **90.59\%** | **80.00\%** | 84.85\% |
+| Qwen2-VL-7B | 75.11\% | *63.64\%* | 85.88\% | 68.89\% | 78.79\% |
+| Gemini-1.5-pro | 73.36\% | *63.64\%* | 84.71\% | 66.67\% | 72.73\% |
+| GPT-4o-mini | 72.93\% | 53.03\% | *88.24\%* | 66.67\% | 81.82\% |
+| Qwen2.5-VL-72B | 65.94\% | 43.94\% | 72.94\% | 66.67\% | **90.91\%** |
+| Qwen2.5-VL-7B | 65.94\% | 45.45\% | 77.65\% | 64.44\% | 78.79\% |
+| Qwen2-VL-72B | 65.07\% | 50.00\% | 68.24\% | 64.44\% | *87.88\%* |
+| Claude-3-7-sonnet | 64.63\% | 30.30\% | 82.35\% | 64.44\% | *87.88\%* |
+| Qwen2-VL-2B | 63.76\% | 51.52\% | 72.94\% | 57.78\% | 72.73\% |
+| Claude-3-5-sonnet | 60.70\% | 28.79\% | 71.76\% | 68.89\% | 84.85\% |
+| Pixtral-Large | 60.26\% | 31.82\% | 77.65\% | 55.56\% | 78.79\% |
+| InternVL2\_5-78B | 50.22\% | 40.91\% | 51.76\% | 51.11\% | 63.64\% |
+| InternVL2-Llama3-76B | 50.22\% | 40.91\% | 56.47\% | 40.00\% | 66.67\% |
+| MiniCPM-V-2\_6 | 49.34\% | 28.79\% | 58.82\% | 53.33\% | 60.61\% |
+| LLaVA-OV-7b | 46.72\% | 43.94\% | 49.41\% | 37.78\% | 57.58\% |
+| Molmo-7B-D | 45.85\% | 34.85\% | 54.12\% | 46.67\% | 45.45\% |
+| InternVL2\_5-8B | 44.98\% | 30.30\% | 50.59\% | 46.67\% | 57.58\% |
+| Molmo-72B | 42.36\% | 37.88\% | 45.88\% | 44.44\% | 39.39\% |
+| Phi-3.5-vision | 37.55\% | 19.70\% | 38.82\% | 51.11\% | 51.52\% |
+| InternVL2-8B | 36.68\% | 22.73\% | 45.88\% | 35.56\% | 42.42\% |
+| NVLM-D-72B | 34.06\% | 31.82\% | 30.59\% | 40.00\% | 39.39\% |
+| Idefics3-8B-Llama3 | 27.95\% | 28.79\% | 30.59\% | 24.44\% | 24.24\% |
+| Meta-Llama-3.2-11B | 13.54\% | 7.58\% | 11.76\% | 26.67\% | 12.12\% |
+| Meta-Llama-3.2-90B | 10.92\% | 7.58\% | 21.18\% | 0.00\% | 6.06\% |
 
 ## BibTeX citation
 
 ```bibtex
-@misc{roman2024academic,
-  author = "{Roman Hauksson}",
-  title = "Academic Project Page Template",
-  year = "2024",
-  howpublished = "\url{https://research-template.roman.technology}",
+@misc{liu2025liveocrbench,
+  author = "{Yesheng Liu, Zheqi He, Jingshu Zheng, Jinge Yao, Xi Yang, Jiajun Zhang}",
+  title = "LiveOCRBench: Tracking Vision-Language Models' Persistent Struggles with Text Recognition",
+  year = "2025",
+  howpublished = "\url{https://flageval-baai.github.io/liveocrbench/}",
 }
 ```
