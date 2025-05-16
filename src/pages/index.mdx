@@ -1,7 +1,7 @@
 ---
 layout: ../layouts/Layout.astro
-title: "LiveOCRBench: Tracking Vision-Language Models' Persistent Struggles with Text Recognition"
-description: "LiveOCRBench is a benchmark for evaluating the OCR abilities of vision-language models on different fonts, designs, and languages."
+title: "LiveOCRVQA: Mitigating Data Contamination to Test True LMM Stylized Text Reading"
+description: "LiveOCRVQA is a benchmark for evaluating the abilities of vision-language models on stylized text reading."
 favicon: favicon.svg
 thumbnail: screenshot-light.png
 ---
@@ -91,7 +91,7 @@ export const components = {pre: CodeBlock, table: Table}
     },
     {
       name: "Dataset",
-      url: "xx",
+      url: "https://huggingface.co/datasets/BAAI/LiveOCRVQA/",
       icon: "simple-icons:huggingface",
       iconColor: "#FFD21E",
     }
@@ -103,9 +103,7 @@ export const components = {pre: CodeBlock, table: Table}
 
 ## Abstract
 
-In recent years, Large Multimodal Models (LMMs) have been widely used across a variety of tasks. In particular, their capabilities in recognizing textual content have been strong, judging from high metrics of text-centric benchmarks. However, there are relatively fewer attempts to specifically benchmark text recognition over various types of fonts or design. Moreover, as LMMs typically incorporate extensive web data in training, the high scores observed in existing benchmarks may heavily stem from data contamination. To effectively mitigate such contamination and to accurately evaluate the true OCR capabilities of LMMs, we present LiveOCRBench, a dynamic benchmark designed specifically for this purpose. LiveOCRBench leverages continuously updated visual content and the corresponding meta-data across four diverse categories, utilizing a semi-automated pipeline to select images that effectively challenge the OCR capabilities of models, significantly reducing the costs associated with direct manual annotation.
-
-We evaluated 25 state-of-the-art LMMs and found that even more recent, advanced models may struggle with simple title queries. Our analysis reveals that current LMMs heavily rely on recalling textual content from previously seen images rather than accurately recognizing individual characters. We will publicly release both our benchmark data and evaluation suite, and plan for future updates on a quarterly basis, to continuously track the performance of various LMMs.
+Large Multimodal Models (LMMs) exhibit impressive text recognition performance on current visual question answering (VQA) and document-centric VQA benchmarks, which predominantly feature text in standardized, print-like formats. This methodological focus fails to adequately capture the diverse, often stylized fonts encountered in real-world scenarios, such as those in artistic designs and web media. While some datasets incorporate images with such complex text, their reliance on older, static image collections, risking data contamination from LMMs' extensive web pretraining. To effectively mitigate such contamination and rigorously evaluate true text-in-image capabilities of LMMs, we introduce LiveOCRVQA. This dynamic benchmark leverages continuously updated visual content and the corresponding meta-data across four diverse categories. It utilizes a semi-automated pipeline to curate images containing stylized text that, while often easily deciphered by humans, effectively challenges the models' underlying text processing abilities, yielding an initial benchmark of 385 such instances. . Our evaluation of 21 prominent models reveals that even recent, advanced models struggle significantly  with queries involving stylized text from novel content. This performance disparity  suggests that high scores on previous, more standardized benchmarks may not accurately reflect robust text recognition capabilities for varied styles. Indeed our analysis indicates that current LMMs often rely on recalling textual content from previously seen images rather than performing fine-grained character recognition on unfamiliar or complex font styles. We will publicly release both our benchmark data and evaluation suite, and plan for future updates on a quarterly basis, to continuously track the performance of various LMMs.
 </HighlightedSection>
 
 ## Figures
