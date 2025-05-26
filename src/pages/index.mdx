@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/Layout.astro
-title: "LiveOCRVQA: Mitigating Data Contamination to Test True LMM Stylized Text Reading"
+title: "LiveOCRVQA: A Dynamic Benchmark for Stylized Text Understanding"
 description: "LiveOCRVQA is a benchmark for evaluating the abilities of vision-language models on stylized text reading."
 favicon: favicon.svg
 thumbnail: screenshot-light.png
@@ -81,7 +81,7 @@ export const components = {pre: CodeBlock, table: Table}
     },
     {
       name: "Code",
-      url: "https://github.com/RomanHauksson/academic-project-astro-template",
+      url: "https://github.com/flageval-baai/FlagEvalMM/tree/liveocrvqa/tasks/liveocrvqa",
       icon: "ri:github-line",
     },
     {
@@ -101,56 +101,58 @@ export const components = {pre: CodeBlock, table: Table}
 
 <HighlightedSection>
 
-## Abstract
+## Introduction
 
-Large Multimodal Models (LMMs) exhibit impressive text recognition performance on current visual question answering (VQA) and document-centric VQA benchmarks, which predominantly feature text in standardized, print-like formats. This methodological focus fails to adequately capture the diverse, often stylized fonts encountered in real-world scenarios, such as those in artistic designs and web media. While some datasets incorporate images with such complex text, their reliance on older, static image collections, risking data contamination from LMMs' extensive web pretraining. To effectively mitigate such contamination and rigorously evaluate true text-in-image capabilities of LMMs, we introduce LiveOCRVQA. This dynamic benchmark leverages continuously updated visual content and the corresponding meta-data across four diverse categories. It utilizes a semi-automated pipeline to curate images containing stylized text that, while often easily deciphered by humans, effectively challenges the models' underlying text processing abilities, yielding an initial benchmark of 385 such instances. . Our evaluation of 21 prominent models reveals that even recent, advanced models struggle significantly  with queries involving stylized text from novel content. This performance disparity  suggests that high scores on previous, more standardized benchmarks may not accurately reflect robust text recognition capabilities for varied styles. Indeed our analysis indicates that current LMMs often rely on recalling textual content from previously seen images rather than performing fine-grained character recognition on unfamiliar or complex font styles. We will publicly release both our benchmark data and evaluation suite, and plan for future updates on a quarterly basis, to continuously track the performance of various LMMs.
+We introduce LiveOCRVQA, a dynamic benchmark designed to avoid contamination from models’ exposure to static, web-sourced data. Using a semi-automated pipeline, we continuously curate fresh images of stylized text—legible to humans but challenging for LMMs—and pair them with metadata across diverse sources. Our initial release comprises 385 instances, which we used to evaluate 21 leading models. Results reveal that many LMMs often fall back on memorized text or learned font/layout patterns rather than true character recognition. Both the dataset and evaluation suite are publicly available, and we will update them quarterly to track real-world text-understanding progress.
+
 </HighlightedSection>
 
-## Figures
+## LiveOCRVQA
 
-Use the figure component to display images, videos, equations, or any other element, with an optional caption.
+LiveOCRVQA comprises 385 stylized text-image instances across four categories—Books, Movies, Albums, and Games—with carefully curated question–answer pairs to evaluate text-understanding capabilities. Comparing to existing benchmarks, LiveOCRVQA is continuously updated to avoid contamination from models’ exposure to static, web-sourced data. Evaluation shows that well-differentiated score rather than saturated score is more meaningful for evaluating the ability of LMMs to understand stylized text.
+
 
 <Figure>
   <Image slot="figure" source={benchmark} altText="LiveOCRBench" />
-  <span slot="caption">Examples from LiveOCRBench, encompassing four distinct categories: Book, Movie, Album, and Game. Each category includes representative visual examples along with their title(author if available)</span>
+  <span slot="caption"></span>
 </Figure>
 
-## LMMs struggle with simple title queries
-Examples illustrating the Language Bias of LMMs, where the models produced typos in these specific, human-simple cases
+## Language Bias in LMMs
+Examples illustrating LMMs produced typos in these specific, human-simple cases, including: 
+1. Recognition Error: involving character-level misidentifications within words
+2. Location Error: word-level omissions or ordering mistakes of critical title words.
 <Figure>
   <Image slot="figure" source={bias} altText="Language Bias" />
-  <span slot="caption">Examples illustrating the Language Bias of LMMs, where the models produced typos in these specific, human-simple cases</span>
+  <span slot="caption"></span>
 </Figure>
 
 ## Leaderboard
 
-| Model | Overall | Album | Book | Game | Movie |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| Gemini-2.0-flash | **76.86\%** | **66.67\%** | 84.71\% | *77.78\%* | 75.76\% |
-| GPT-4o | *76.42\%* | 51.52\% | **90.59\%** | **80.00\%** | 84.85\% |
-| Qwen2-VL-7B | 75.11\% | *63.64\%* | 85.88\% | 68.89\% | 78.79\% |
-| Gemini-1.5-pro | 73.36\% | *63.64\%* | 84.71\% | 66.67\% | 72.73\% |
-| GPT-4o-mini | 72.93\% | 53.03\% | *88.24\%* | 66.67\% | 81.82\% |
-| Qwen2.5-VL-72B | 65.94\% | 43.94\% | 72.94\% | 66.67\% | **90.91\%** |
-| Qwen2.5-VL-7B | 65.94\% | 45.45\% | 77.65\% | 64.44\% | 78.79\% |
-| Qwen2-VL-72B | 65.07\% | 50.00\% | 68.24\% | 64.44\% | *87.88\%* |
-| Claude-3-7-sonnet | 64.63\% | 30.30\% | 82.35\% | 64.44\% | *87.88\%* |
-| Qwen2-VL-2B | 63.76\% | 51.52\% | 72.94\% | 57.78\% | 72.73\% |
-| Claude-3-5-sonnet | 60.70\% | 28.79\% | 71.76\% | 68.89\% | 84.85\% |
-| Pixtral-Large | 60.26\% | 31.82\% | 77.65\% | 55.56\% | 78.79\% |
-| InternVL2\_5-78B | 50.22\% | 40.91\% | 51.76\% | 51.11\% | 63.64\% |
-| InternVL2-Llama3-76B | 50.22\% | 40.91\% | 56.47\% | 40.00\% | 66.67\% |
-| MiniCPM-V-2\_6 | 49.34\% | 28.79\% | 58.82\% | 53.33\% | 60.61\% |
-| LLaVA-OV-7b | 46.72\% | 43.94\% | 49.41\% | 37.78\% | 57.58\% |
-| Molmo-7B-D | 45.85\% | 34.85\% | 54.12\% | 46.67\% | 45.45\% |
-| InternVL2\_5-8B | 44.98\% | 30.30\% | 50.59\% | 46.67\% | 57.58\% |
-| Molmo-72B | 42.36\% | 37.88\% | 45.88\% | 44.44\% | 39.39\% |
-| Phi-3.5-vision | 37.55\% | 19.70\% | 38.82\% | 51.11\% | 51.52\% |
-| InternVL2-8B | 36.68\% | 22.73\% | 45.88\% | 35.56\% | 42.42\% |
-| NVLM-D-72B | 34.06\% | 31.82\% | 30.59\% | 40.00\% | 39.39\% |
-| Idefics3-8B-Llama3 | 27.95\% | 28.79\% | 30.59\% | 24.44\% | 24.24\% |
-| Meta-Llama-3.2-11B | 13.54\% | 7.58\% | 11.76\% | 26.67\% | 12.12\% |
-| Meta-Llama-3.2-90B | 10.92\% | 7.58\% | 21.18\% | 0.00\% | 6.06\% |
+
+
+| Model                | Overall   | Album     | Book      | Game      | Movie     |
+|----------------------|-----------|-----------|-----------|-----------|-----------|
+| Gemini-2.5-pro       | **80.52%**| **68.31%**| **90.14%**| **85.71%**| **88.33%**|
+| Gemini-2.5-flash     | 75.32%    | 66.20%    | 80.28%    | 81.25%    | 80.00%    |
+| Qwen2-VL-7B          | 72.21%    | 64.08%    | 83.10%    | 71.43%    | 80.00%    |
+| GPT-4o-2411          | 69.09%    | 57.04%    | **90.14%**| 74.11%    | 63.33%    |
+| gpt-4o-mini          | 67.53%    | 54.93%    | 83.10%    | 70.54%    | 73.33%    |
+| Qwen2.5-VL-72B       | 67.27%    | 53.52%    | 71.83%    | 75.00%    | 80.00%    |
+| GPT-4o-2408          | 67.01%    | 48.59%    | 81.69%    | 79.46%    | 70.00%    |
+| Qwen2.5-VL-7B        | 65.97%    | 51.41%    | 74.65%    | 72.32%    | 78.33%    |
+| Qwen2-VL-2B          | 64.68%    | 52.82%    | 76.06%    | 66.07%    | 76.67%    |
+| Qwen2-VL-72B         | 63.64%    | 56.34%    | 66.20%    | 66.07%    | 73.33%    |
+| InternVL3-78B        | 63.64%    | 54.23%    | 67.61%    | 68.75%    | 71.67%    |
+| Claude-3-7-sonnet    | 62.60%    | 38.03%    | 85.92%    | 66.07%    | 86.67%  |
+| Claude-3-5-sonnet    | 59.74%    | 39.44%    | 76.06%    | 62.50%    | 83.33%    |
+| Pixtral-Large        | 58.96%    | 41.55%    | 76.06%    | 60.71%    | 76.67%    |
+| InternVL2.5-78B      | 50.65%    | 43.66%    | 54.93%    | 53.57%    | 56.67%    |
+| InternVL3-8B         | 49.61%    | 40.14%    | 54.93%    | 49.11%    | 66.67%    |
+| LLaVA-OV-7b          | 45.71%    | 45.77%    | 50.70%    | 41.07%    | 48.33%    |
+| InternVL2.5-8B       | 39.22%    | 30.28%    | 52.11%    | 41.07%    | 41.67%    |
+| Phi-3.5-vision       | 37.40%    | 19.01%    | 40.85%    | 53.57%    | 46.67%    |
+| Idefics3-8B          | 28.05%    | 29.58%    | 39.44%    | 17.86%    | 30.00%    |
+| Phi-4-multimodal     | 17.92%    | 16.20%    | 21.13%    | 17.86%    | 18.33%    |
 
 ## BibTeX citation
 
